@@ -1,0 +1,48 @@
+---
+title: "shiny1"
+author: "Michael Ippolito"
+date: "2023-03-01"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(shiny)
+library(rsconnect)
+library(psych)
+
+```
+
+```{r}
+
+# Load data
+df_raw <- read.csv("https://raw.githubusercontent.com/charleyferrari/CUNY_DATA608/master/lecture3/data/cleaned-cdc-mortality-1999-2010-2.csv")
+summary(df_raw)
+head(df_raw)
+df <- df_raw
+
+```
+
+```{r fig.height=8, fig.width=10}
+
+# Factorize
+df$State <- factor(df$State)
+df$ICD.Chapter <- factor(df$ICD.Chapter)
+print(paste0("Number of categories for ICD.Chapter: ", length(levels(df$ICD.Chapter))))
+summary(df)
+
+```
+
+```{r}
+
+runApp('ippolito_module3', display.mode='normal')
+
+```
+
+```{r}
+
+rsconnect::deployApp('ippolito_module3')   # https://www.shinyapps.io/admin/#/dashboard
+
+```
